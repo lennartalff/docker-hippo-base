@@ -1,0 +1,16 @@
+image: lennartalff/hippo-base:latest
+manifests:
+  - image: lennartalff/hippo-base:amd64
+    platform:
+      architecture: amd64
+      os: linux
+  - image: lennartalff/hippo-base:arm32v7
+    platform:
+      architecture: arm32
+      os: linux
+      variant: v7
+  - image: lennartalff/hippo-base:arm64v8
+    platform:
+      architecture: arm64
+      os: linux
+      variant: v8
