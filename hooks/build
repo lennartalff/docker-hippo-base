@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker build -f "$DOCKERFILE_PATH.$DOCKER_TAG" -t $IMAGE_NAME .
