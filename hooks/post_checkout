@@ -1,0 +1,24 @@
+#!/bin/bash
+
+docker_archs=("amd64" "arm32v7" "arm64v8")
+
+for docker_arch in "${docker_archs[@]}"; do
+    case $docker_arch in
+    amd64) qemu_arch="x86_64" ;;
+    arm32v7) qemu_arch="arm" ;;
+    arm64v8) qemu_arch="aarch64" ;;
+    esac
+
+    dest_file=./Dockerfile.${docker_arch}
+    cp Dockerfile ${dest_file}
+    echo "Writing to file: $dest_file"
+    sed -i "s/__DOCKER_ARCH__/${docker_arch}/g" ${dest_file}
+    sed -i "s/__QEMU_ARCH__/${qemu_arch}/g" ${dest_file}
+
+    # delete lines marked with __CROSS__ if building for native amd64 arch.
+    if [ $docker_arch == 'amd64' ]; then
+        sed -i "/__CROSS__/d" ${dest_file}
+    else
+        sed -i "s/__CROSS__//g" ${dest_file}
+    fi
+done
